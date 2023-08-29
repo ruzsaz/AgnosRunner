@@ -1,0 +1,2 @@
+
+echo $PROGRAM_DIR

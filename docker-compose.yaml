@@ -1,0 +1,111 @@
+version: '3'
+
+services:
+  keycloak:
+    image: quay.io/keycloak/keycloak:22.0.1
+    container_name: agnos-keycloak
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin2357
+      KC_HTTP_RELATIVE_PATH: "/auth"
+      KC_HTTP_ENABLED: "true"
+    networks:
+      - keycloak
+    ports:
+      - "8082:8080"
+    restart: always
+    command:
+      - start-dev
+    volumes:
+      - /home/ruzsaz/IdeaProjects/Agnos/AgnosKeyCloack/local/keycloak/:/opt/keycloak/data/
+      - /home/ruzsaz/IdeaProjects/Agnos/AgnosKeyCloack/themes/:/opt/keycloak/themes/
+
+  nginx:
+    image: agnos-cube-nginx:1.0
+    container_name: agnos-cube-nginx
+    networks:
+      - backend
+    depends_on:
+      - cube-server-1
+      - cube-server-2
+    restart: always
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "5"
+        max-size: "10m"
+
+  cube-server-1:
+    image: agnos-cube-server:2.0
+    container_name: agnos-cube-server-1
+    volumes:
+      - /home/ruzsaz/Agnos/Products:/usr/local/agnos/Products/
+    networks:
+      - backend
+    expose:
+      - 7979
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "5"
+        max-size: "10m"
+
+  cube-server-2:
+    image: agnos-cube-server:2.0
+    container_name: agnos-cube-server-2
+    volumes:
+      - /home/ruzsaz/Agnos/Products:/usr/local/agnos/Products/
+    networks:
+      - backend
+    expose:
+      - 7979
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "5"
+        max-size: "10m"
+
+  agnos-httpd:
+    image: agnos-apache:2.4
+    container_name: agnos-frontend
+    ports:
+      - "8080:80"
+    networks:
+      - frontend
+      - keycloak
+    depends_on:
+      - keycloak
+      - report-server
+    volumes:
+      - /home/ruzsaz/IdeaProjects/Agnos/Agnos/public_html:/usr/local/apache2/htdocs/
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "5"
+        max-size: "10m"
+
+  report-server:
+    image: agnos-report-server:2.0
+    container_name: agnos-report-server
+    ports:
+      - "9091:9091"
+    networks:
+      - frontend
+      - backend
+      - keycloak
+    depends_on:
+      - nginx
+      - keycloak
+    restart: always
+    volumes:
+      - /home/ruzsaz/Agnos/Products/:/usr/local/agnos/Products/
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "5"
+        max-size: "10m"
+
+networks:
+  backend:
+  frontend:
+  keycloak:
