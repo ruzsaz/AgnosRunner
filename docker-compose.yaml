@@ -9,6 +9,10 @@ services:
       KEYCLOAK_ADMIN_PASSWORD: admin2357
       KC_HTTP_RELATIVE_PATH: "/auth"
       KC_HTTP_ENABLED: "true"
+      KEYCLOAK_HOSTNAME_URL: "http://agnos-keycloak:8080/auth/"
+      KEYCLOAK_FRONTEND_URL: "http://localhost:8082/auth/realms/AgnosRealm"
+      KEYCLOAK_HOSTNAME_DEBUG: "true"
+
     networks:
       - keycloak
     ports:
@@ -39,7 +43,7 @@ services:
     image: agnos-cube-server:2.0
     container_name: agnos-cube-server-1
     volumes:
-      - /home/ruzsaz/Agnos/Products:/usr/local/agnos/Products/
+      - ${CUBES_DIR}:/usr/local/agnos/Cubes/
     networks:
       - backend
     expose:
@@ -54,7 +58,7 @@ services:
     image: agnos-cube-server:2.0
     container_name: agnos-cube-server-2
     volumes:
-      - /home/ruzsaz/Agnos/Products:/usr/local/agnos/Products/
+      - ${CUBES_DIR}:/usr/local/agnos/Cubes/
     networks:
       - backend
     expose:
@@ -87,12 +91,18 @@ services:
   report-server:
     image: agnos-report-server:2.0
     container_name: agnos-report-server
+    environment:
+      KEYCLOAK_INTERNAL_REALM_URI: "http://agnos-keycloak:8080/auth/realms/AgnosRealm"
+      #KEYCLOAK_INTERNAL_REALM_URI: "http://host.docker.internal:8082/auth/realms/AgnosRealm"
+      CUBE_INTERNAL_IP: agnos-cube-nginx
     ports:
       - "9091:9091"
     networks:
       - frontend
       - backend
       - keycloak
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     depends_on:
       - nginx
       - keycloak
