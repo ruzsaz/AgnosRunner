@@ -2,36 +2,30 @@ version: '3'
 
 services:
   keycloak:
-    image: quay.io/keycloak/keycloak:22.0.1
+    image: agnos-keycloak:1.0
     container_name: agnos-keycloak
     environment:
       KEYCLOAK_ADMIN: admin
       KEYCLOAK_ADMIN_PASSWORD: admin2357
       KC_HTTP_RELATIVE_PATH: "/auth"
       KC_HTTP_ENABLED: "true"
-      KEYCLOAK_HOSTNAME_URL: "http://agnos-keycloak:8080/auth/"
-      KEYCLOAK_FRONTEND_URL: "http://localhost:8082/auth/realms/AgnosRealm"
-      KEYCLOAK_HOSTNAME_DEBUG: "true"
-
+      KC_HOSTNAME_URL: "${KEYCLOAK_PUBLIC_IP}:${KEYCLOAK_PUBLIC_PORT}/auth/"
+      KEYCLOAK_FRONTEND_URL: "${KEYCLOAK_PUBLIC_IP}:${KEYCLOAK_PUBLIC_PORT}/auth/realms/AgnosRealm"
     networks:
       - keycloak
+    depends_on:
+      - nginx
     ports:
-      - "8082:8080"
+      - "${KEYCLOAK_PUBLIC_PORT}:8080"
     restart: always
-    command:
-      - start-dev
     volumes:
       - /home/ruzsaz/IdeaProjects/Agnos/AgnosKeyCloack/local/keycloak/:/opt/keycloak/data/
-      - /home/ruzsaz/IdeaProjects/Agnos/AgnosKeyCloack/themes/:/opt/keycloak/themes/
 
   nginx:
     image: agnos-cube-nginx:1.0
     container_name: agnos-cube-nginx
     networks:
       - backend
-    depends_on:
-      - cube-server-1
-      - cube-server-2
     restart: always
     logging:
       driver: "json-file"
@@ -72,6 +66,11 @@ services:
   agnos-httpd:
     image: agnos-apache:2.4
     container_name: agnos-frontend
+    environment:
+      KEYCLOAK_PUBLIC_IP: "${KEYCLOAK_PUBLIC_IP}"
+      KEYCLOAK_PUBLIC_PORT: "${KEYCLOAK_PUBLIC_PORT}"
+      REPORTSERVER_PUBLIC_IP: "${REPORTSERVER_PUBLIC_IP}"
+      REPORTSERVER_PUBLIC_PORT: "${REPORTSERVER_PUBLIC_PORT}"
     ports:
       - "8080:80"
     networks:
@@ -80,8 +79,6 @@ services:
     depends_on:
       - keycloak
       - report-server
-    volumes:
-      - /home/ruzsaz/IdeaProjects/Agnos/Agnos/public_html:/usr/local/apache2/htdocs/
     logging:
       driver: "json-file"
       options:
@@ -92,17 +89,14 @@ services:
     image: agnos-report-server:2.0
     container_name: agnos-report-server
     environment:
-      KEYCLOAK_INTERNAL_REALM_URI: "http://agnos-keycloak:8080/auth/realms/AgnosRealm"
-      #KEYCLOAK_INTERNAL_REALM_URI: "http://host.docker.internal:8082/auth/realms/AgnosRealm"
+      KEYCLOAK_INTERNAL_REALM_URI: "${KEYCLOAK_PUBLIC_IP}:${KEYCLOAK_PUBLIC_PORT}/auth/realms/AgnosRealm"
       CUBE_INTERNAL_IP: agnos-cube-nginx
     ports:
-      - "9091:9091"
+      - "${REPORTSERVER_PUBLIC_PORT}:9091"
     networks:
       - frontend
       - backend
       - keycloak
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
     depends_on:
       - nginx
       - keycloak

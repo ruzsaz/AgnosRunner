@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# Clear the terminal screen
+clear
+
+# Change to 'export all env variables' mode
 set -o allexport
 
 # This script's directory, relative to the running point
@@ -17,6 +21,8 @@ source ${SCRIPT_DIR}/init_variables.sh
 # Load the personal settings
 source ${SCRIPT_DIR}/environment.txt
 
+# Restore to normal env variable mode
 set +o allexport
 
+# Start the docker compose process
 docker-compose up
