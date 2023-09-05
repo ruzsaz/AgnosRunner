@@ -13,15 +13,16 @@ REPORT_VALIDATOR_XSD=/home/ruzsaz/Agnos/Products/global/conf/report.xsd
 KEYCLOAK_DATABASE_DIR=/home/ruzsaz/IdeaProjects/Agnos/AgnosKeyCloack/local/keycloak/
 
 # The main IP where everything is deployed. Should be accessible through a browser
-PUBLIC_IP=http://192.168.1.2
+#INSIDE_IP=http://192.168.1.2
 
 
 
 ##### Keycloak settings
 
 # IP and port to put the Keycloak instance
-KEYCLOAK_PUBLIC_IP=${PUBLIC_IP}
-KEYCLOAK_PUBLIC_PORT=8082
+KEYCLOAK_PUBLIC_IP=http://192.168.1.2:8082	# Public URL AFTER firewalls or front facing proxies applied
+#KEYCLOAK_INSIDE_IP=${INSIDE_IP}		# Public IP WITHOUT firewalls or front facing proxies
+KEYCLOAK_INSIDE_PORT=8082			# Public port WITHOUT firewalls or front facing proxies
 KEYCLOAK_ADMIN=admin
 KEYCLOAK_ADMIN_PASSWORD=admin2357
 KEYCLOAK_PATH_PREFIX=/auth
@@ -32,11 +33,13 @@ KEYCLOAK_CLIENT=agnos
 ##### ReportServer settings
 
 # IP and port to put the AgnosReportServer service
-REPORTSERVER_PUBLIC_IP=${PUBLIC_IP}
-REPORTSERVER_PUBLIC_PORT=9091
+REPORTSERVER_PUBLIC_IP=http://192.168.1.2:9091	# Public URL AFTER firewalls or front facing proxies applied
+#REPORTSERVER_INSIDE_IP=${INSIDE_IP}		# Public IP WITHOUT firewalls or front facing proxies
+REPORTSERVER_INSIDE_PORT=9091			# Public port WITHOUT firewalls or front facing proxies
 
 
 ##### Agnos client settings
 # IP and port to put the Agnos client
-AGNOS_PUBLIC_IP=${PUBLIC_IP}
-AGNOS_PUBLIC_PORT=8080
+AGNOS_PUBLIC_IP=http://192.168.1.2:8080		# Public URL AFTER firewalls or front facing proxies applied
+#AGNOS_INSIDE_IP=${INSIDE_IP}			# Public IP WITHOUT firewalls or front facing proxies
+AGNOS_INSIDE_PORT=8080				# Public port WITHOUT firewalls or front facing proxies
