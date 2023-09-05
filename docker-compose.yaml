@@ -5,12 +5,16 @@ services:
     image: agnos-keycloak:1.0
     container_name: agnos-keycloak
     environment:
-      KEYCLOAK_ADMIN: admin
-      KEYCLOAK_ADMIN_PASSWORD: admin2357
-      KC_HTTP_RELATIVE_PATH: "/auth"
+      KEYCLOAK_ADMIN: "${KEYCLOAK_ADMIN}"
+      KEYCLOAK_ADMIN_PASSWORD: "${KEYCLOAK_ADMIN_PASSWORD}"
+      KC_HTTP_RELATIVE_PATH: "${KEYCLOAK_PATH_PREFIX}"
       KC_HTTP_ENABLED: "true"
-      KC_HOSTNAME_URL: "${KEYCLOAK_PUBLIC_IP}:${KEYCLOAK_PUBLIC_PORT}/auth/"
-      KEYCLOAK_FRONTEND_URL: "${KEYCLOAK_PUBLIC_IP}:${KEYCLOAK_PUBLIC_PORT}/auth/realms/AgnosRealm"
+      KC_HOSTNAME_URL: "${KEYCLOAK_PUBLIC_IP}:${KEYCLOAK_PUBLIC_PORT}${KEYCLOAK_PATH_PREFIX}/"
+      KEYCLOAK_FRONTEND_URL: "${KEYCLOAK_PUBLIC_IP}:${KEYCLOAK_PUBLIC_PORT}${KEYCLOAK_PATH_PREFIX}/realms/${KEYCLOAK_REALM}"
+      KEYCLOAK_REALM: "${KEYCLOAK_REALM}"
+      KEYCLOAK_CLIENT: "${KEYCLOAK_CLIENT}"
+      AGNOS_PUBLIC_IP: "${AGNOS_PUBLIC_IP}"
+      AGNOS_PUBLIC_PORT: "${AGNOS_PUBLIC_PORT}"
     networks:
       - keycloak
     depends_on:
@@ -19,7 +23,7 @@ services:
       - "${KEYCLOAK_PUBLIC_PORT}:8080"
     restart: always
     volumes:
-      - /home/ruzsaz/IdeaProjects/Agnos/AgnosKeyCloack/local/keycloak/:/opt/keycloak/data/
+      - "${KEYCLOAK_DATABASE_DIR}:/opt/keycloak/data/"
 
   nginx:
     image: agnos-cube-nginx:1.0
@@ -37,7 +41,7 @@ services:
     image: agnos-cube-server:2.0
     container_name: agnos-cube-server-1
     volumes:
-      - ${CUBES_DIR}:/usr/local/agnos/Cubes/
+      - "${CUBES_DIR}:/usr/local/agnos/Cubes/"
     networks:
       - backend
     expose:
@@ -52,7 +56,7 @@ services:
     image: agnos-cube-server:2.0
     container_name: agnos-cube-server-2
     volumes:
-      - ${CUBES_DIR}:/usr/local/agnos/Cubes/
+      - "${CUBES_DIR}:/usr/local/agnos/Cubes/"
     networks:
       - backend
     expose:
@@ -72,7 +76,7 @@ services:
       REPORTSERVER_PUBLIC_IP: "${REPORTSERVER_PUBLIC_IP}"
       REPORTSERVER_PUBLIC_PORT: "${REPORTSERVER_PUBLIC_PORT}"
     ports:
-      - "8080:80"
+      - "${AGNOS_PUBLIC_PORT}:80"
     networks:
       - frontend
       - keycloak
@@ -89,8 +93,9 @@ services:
     image: agnos-report-server:2.0
     container_name: agnos-report-server
     environment:
-      KEYCLOAK_INTERNAL_REALM_URI: "${KEYCLOAK_PUBLIC_IP}:${KEYCLOAK_PUBLIC_PORT}/auth/realms/AgnosRealm"
+      KEYCLOAK_INTERNAL_REALM_URI: "${KEYCLOAK_PUBLIC_IP}:${KEYCLOAK_PUBLIC_PORT}${KEYCLOAK_PATH_PREFIX}/realms/${KEYCLOAK_REALM}"
       CUBE_INTERNAL_IP: agnos-cube-nginx
+      CORS_ORIGINS: "${AGNOS_PUBLIC_IP}:${AGNOS_PUBLIC_PORT}"
     ports:
       - "${REPORTSERVER_PUBLIC_PORT}:9091"
     networks:
@@ -102,7 +107,8 @@ services:
       - keycloak
     restart: always
     volumes:
-      - /home/ruzsaz/Agnos/Products/:/usr/local/agnos/Products/
+      - "${REPORT_META_DIR}:/usr/local/agnos/Meta"
+      - "${REPORT_VALIDATOR_XSD}:/usr/local/agnos/report.xsd"
     logging:
       driver: "json-file"
       options:

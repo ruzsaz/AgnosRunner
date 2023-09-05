@@ -1,11 +1,42 @@
+##### Local settings: files, volumes, ip
 
-# Local directory for the cubes. It will be mapped to the CubeServer containers
+# Local directory containing the cubes. It will be volumed to the CubeServer containers.
 CUBES_DIR=/home/ruzsaz/Agnos/Products/AgnosReportingServer/Cubes
 
+# Local directory containing the report metas. It will be volumed to the ReportServer container.
+REPORT_META_DIR=/home/ruzsaz/Agnos/Products/AgnosReportingServer/Meta
+
+# Local path to the report validator report.xsd file
+REPORT_VALIDATOR_XSD=/home/ruzsaz/Agnos/Products/global/conf/report.xsd
+
+# Keycloak's database's local location. It will be mapped inside to the Keycloak conatiner.
+KEYCLOAK_DATABASE_DIR=/home/ruzsaz/IdeaProjects/Agnos/AgnosKeyCloack/local/keycloak/
+
+# The main IP where everything is deployed. Should be accessible through a browser
+PUBLIC_IP=http://192.168.1.2
+
+
+
+##### Keycloak settings
+
 # IP and port to put the Keycloak instance
-KEYCLOAK_PUBLIC_IP=http://192.168.1.2
+KEYCLOAK_PUBLIC_IP=${PUBLIC_IP}
 KEYCLOAK_PUBLIC_PORT=8082
+KEYCLOAK_ADMIN=admin
+KEYCLOAK_ADMIN_PASSWORD=admin2357
+KEYCLOAK_PATH_PREFIX=/auth
+KEYCLOAK_REALM=AgnosRealm
+KEYCLOAK_CLIENT=agnos
+
+
+##### ReportServer settings
 
 # IP and port to put the AgnosReportServer service
-REPORTSERVER_PUBLIC_IP=http://192.168.1.2
+REPORTSERVER_PUBLIC_IP=${PUBLIC_IP}
 REPORTSERVER_PUBLIC_PORT=9091
+
+
+##### Agnos client settings
+# IP and port to put the Agnos client
+AGNOS_PUBLIC_IP=${PUBLIC_IP}
+AGNOS_PUBLIC_PORT=8080
