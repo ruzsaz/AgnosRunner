@@ -15,9 +15,6 @@ SCRIPT_DIR=$( cd -- ${RELATIVE_SCRIPT_DIR} &> /dev/null && pwd )
 # Base directory of the Agnos programs (parent of the script's dir)
 PROGRAM_DIR="$(dirname ${SCRIPT_DIR})"
 
-# Load the static variables
-source ${SCRIPT_DIR}/init_variables.sh
-
 # Load the personal settings
 source ${SCRIPT_DIR}/environment.txt
 

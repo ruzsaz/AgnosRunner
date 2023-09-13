@@ -108,12 +108,40 @@ services:
     restart: always
     volumes:
       - "${REPORT_META_DIR}:/usr/local/agnos/Meta"
-      - "${REPORT_VALIDATOR_XSD}:/usr/local/agnos/report.xsd"
     logging:
       driver: "json-file"
       options:
         max-file: "5"
         max-size: "10m"
+
+#  report-manager:
+#    image: ruzsaz/agnos-report-manager:2.0
+#    container_name: agnos-report-manager
+#    environment:
+#      CUBE_SERVER_URI: agnos-cube-nginx
+#      KEYCLOAK_SERVERURL: "${KEYCLOAK_PUBLIC_IP}${KEYCLOAK_PATH_PREFIX}"
+#      KEYCLOAK_REALM: "${KEYCLOAK_REALM}"
+#      KEYCLOAK_CLIENTID: "${KEYCLOAK_CLIENT}"
+#      KEYCLOAK_USERNAME: "${KEYCLOAK_ADMIN}"
+#      KEYCLOAK_PASSWORD: "${KEYCLOAK_ADMIN_PASSWORD}"
+#    ports:
+#      - "${REPORTMANAGER_INSIDE_PORT}:8080"
+#    networks:
+#      - backend
+#      - keycloak
+#    depends_on:
+#      - nginx
+#      - keycloak
+#    restart: always
+#    volumes:
+#      - "${REPORT_META_DIR}:/opt/jboss/agnos/Data"
+#      - "${CUBES_DIR}:/usr/local/agnos/Cubes/"
+#    logging:
+#      driver: "json-file"
+#      options:
+#        max-file: "5"
+#        max-size: "10m"
+
 
 networks:
   backend:

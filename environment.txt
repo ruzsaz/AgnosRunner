@@ -6,9 +6,6 @@ CUBES_DIR=/home/ruzsaz/Agnos/Products/AgnosReportingServer/Cubes
 # Local directory containing the report metas. It will be volumed to the ReportServer container.
 REPORT_META_DIR=/home/ruzsaz/Agnos/Products/AgnosReportingServer/Meta
 
-# Local path to the report validator report.xsd file
-REPORT_VALIDATOR_XSD=/home/ruzsaz/Agnos/Products/global/conf/report.xsd
-
 # Keycloak's database's local location. It will be mapped inside to the Keycloak conatiner.
 KEYCLOAK_DATABASE_DIR=/home/ruzsaz/IdeaProjects/Agnos/AgnosKeyCloack/local/keycloak/
 
