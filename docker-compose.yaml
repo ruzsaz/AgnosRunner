@@ -15,7 +15,7 @@ services:
       KEYCLOAK_FRONTEND_URL: "${KEYCLOAK_PUBLIC_IP}${KEYCLOAK_PATH_PREFIX}/realms/${KEYCLOAK_REALM}"
       KEYCLOAK_REALM: "${KEYCLOAK_REALM}"
       KEYCLOAK_CLIENT: "${KEYCLOAK_CLIENT}"
-      AGNOS_PUBLIC_IP: "${AGNOS_PUBLIC_IP}"
+      REDIRECT_URIS: "\"${AGNOS_PUBLIC_IP}/*\", \"${REPORTMANAGER_PUBLIC_IP}/*\""
       KEYCLOAK_COMMAND_ARG: "start-dev"
     networks:
       - keycloak
@@ -107,40 +107,41 @@ services:
       - keycloak
     restart: always
     volumes:
-      - "${REPORT_META_DIR}:/usr/local/agnos/Meta"
+      - "${REPORTS_DIR}:/usr/local/agnos/Reports"
     logging:
       driver: "json-file"
       options:
         max-file: "5"
         max-size: "10m"
 
-#  report-manager:
-#    image: ruzsaz/agnos-report-manager:2.0
-#    container_name: agnos-report-manager
-#    environment:
-#      CUBE_SERVER_URI: agnos-cube-nginx
-#      KEYCLOAK_SERVERURL: "${KEYCLOAK_PUBLIC_IP}${KEYCLOAK_PATH_PREFIX}"
-#      KEYCLOAK_REALM: "${KEYCLOAK_REALM}"
-#      KEYCLOAK_CLIENTID: "${KEYCLOAK_CLIENT}"
-#      KEYCLOAK_USERNAME: "${KEYCLOAK_ADMIN}"
-#      KEYCLOAK_PASSWORD: "${KEYCLOAK_ADMIN_PASSWORD}"
-#    ports:
-#      - "${REPORTMANAGER_INSIDE_PORT}:8080"
-#    networks:
-#      - backend
-#      - keycloak
-#    depends_on:
-#      - nginx
-#      - keycloak
-#    restart: always
-#    volumes:
-#      - "${REPORT_META_DIR}:/opt/jboss/agnos/Data"
-#      - "${CUBES_DIR}:/usr/local/agnos/Cubes/"
-#    logging:
-#      driver: "json-file"
-#      options:
-#        max-file: "5"
-#        max-size: "10m"
+  report-manager:
+    image: ruzsaz/agnos-report-manager:2.0
+    container_name: agnos-report-manager
+    environment:
+      CUBE_SERVER_URI: "http://agnos-cube-nginx:7979/acs"
+      KEYCLOAK_SERVERURL: "${KEYCLOAK_PUBLIC_IP}${KEYCLOAK_PATH_PREFIX}"
+      KEYCLOAK_REALM: "${KEYCLOAK_REALM}"
+      KEYCLOAK_CLIENTID: "${KEYCLOAK_CLIENT}"
+      KEYCLOAK_REALM_PUBLIC_URI: "${KEYCLOAK_PUBLIC_IP}${KEYCLOAK_PATH_PREFIX}/realms/${KEYCLOAK_REALM}"
+      KEYCLOAK_USERNAME: "${KEYCLOAK_ADMIN}"
+      KEYCLOAK_PASSWORD: "${KEYCLOAK_ADMIN_PASSWORD}"
+    ports:
+      - "${REPORTMANAGER_INSIDE_PORT}:8080"
+    networks:
+      - backend
+      - keycloak
+    depends_on:
+      - nginx
+      - keycloak
+    restart: always
+    volumes:
+      - "${REPORTS_DIR}:/opt/agnos/Reports"
+      - "${CUBES_DIR}:/opt/agnos/Cubes"
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "5"
+        max-size: "10m"
 
 
 networks:

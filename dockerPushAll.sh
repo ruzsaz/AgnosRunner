@@ -18,12 +18,18 @@ PROGRAM_DIR="$(dirname ${SCRIPT_DIR})"
 # Load the personal settings
 source ${SCRIPT_DIR}/environment.txt
 
-mvn clean install --file ../AgnosCube/pom.xml && \
-mvn clean install --file ../AgnosMolap/pom.xml && \
-mvn clean install --file ../AgnosReport/pom.xml && \
-mvn clean install --file ../AgnosCubeDriver/pom.xml && \
-mvn clean install --file ../AgnosCubeMeta/pom.xml && \
-mvn clean install --file ../AgnosCubeServer/pom.xml && \
-mvn clean install --file ../AgnosReportManager/pom.xml && \
-mvn clean install --file ../AgnosReportServer/pom.xml && \
+push () {
+    cd $PROGRAM_DIR
+    cd $1
+    source ./env.txt
+    docker push ${TARGET_CONTAINER_NAME}
+}
+
+
+push "Agnos/docker" && \
+push "Agnos/docker/keycloak" && \
+push "AgnosCubeServer/docker" && \
+push "AgnosCubeServer/docker/nginx" && \
+push "AgnosReportManager/docker" && \
+push "AgnosReportServer/docker" && \
 echo "Everything went well..."
