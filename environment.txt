@@ -36,4 +36,5 @@ AGNOS_INSIDE_PORT=8080				# Public port WITHOUT firewalls or front facing proxie
 
 ##### Report Manager settings
 REPORTMANAGER_PUBLIC_IP=http://192.168.1.2:9092		# Public URL AFTER firewalls or front facing proxies applied
+REPORTMANAGER_INSIDE_IP=http://192.168.1.2:9092/AgnosReportManager	# For redirect URI only for the keaycloak
 REPORTMANAGER_INSIDE_PORT=9092				# Public port WITHOUT firewalls or front facing proxies
