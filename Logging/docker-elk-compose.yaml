@@ -1,0 +1,62 @@
+version: '3.3'
+
+services:
+  logspout:
+    image: gliderlabs/logspout:v3
+    labels:
+      - "logspout.exclude=true"
+    environment:
+      - EXCLUDE_LABEL=logspout.exclude
+      - LOGSPOUT=ignore
+    command: 'udp://logstash:5000'
+    links:
+      - logstash
+    volumes:
+      - '/var/run/docker.sock:/tmp/docker.sock'
+    depends_on:
+      - elasticsearch
+      - logstash
+      - kibana
+
+  logstash:
+    image: logstash:2.1.1
+    labels:
+      - "logspout.exclude=true"
+    environment:
+      - STDOUT=true
+      - LOGSPOUT=ignore
+    links:
+      - elasticsearch
+    depends_on:
+      - elasticsearch
+      - kibana
+    volumes:
+      - ./logstash.conf:/etc/logstash/conf.d/logstash.conf:ro
+      - ./logs:/usr/share/logstash/data
+    command: 'logstash -f /etc/logstash/conf.d/logstash.conf'
+
+  kibana:
+    image: kibana:4.1.2
+    labels:
+      - "logspout.exclude=true"
+    links:
+      - elasticsearch
+    environment:
+      - ELASTICSEARCH_URL=http://elasticsearch:9200
+      - LOGSPOUT=ignore
+      - LOGGING_ROOT_LEVEL="WARN"
+    ports:
+      - '5601:5601'
+    depends_on:
+      - elasticsearch
+
+  elasticsearch:
+    image: elasticsearch:1.5.2
+    labels:
+      - "logspout.exclude=true"
+    environment:
+      - LOGSPOUT=ignore
+      - logger.level="WARN"
+    ports:
+      - '9200:9200'
+      - '9300:9300'

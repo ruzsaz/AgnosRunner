@@ -119,6 +119,7 @@ services:
     container_name: agnos-report-manager
     environment:
       CUBE_SERVER_URI: "http://agnos-cube-nginx:7979/acs"
+      REPORT_SERVER_URI: "http://agnos-report-server:9091/ars"
       KEYCLOAK_SERVERURL: "${KEYCLOAK_PUBLIC_IP}${KEYCLOAK_PATH_PREFIX}"
       KEYCLOAK_REALM: "${KEYCLOAK_REALM}"
       KEYCLOAK_CLIENTID: "${KEYCLOAK_CLIENT}"

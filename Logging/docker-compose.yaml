@@ -1,0 +1,30 @@
+version: '3.3'
+
+services:
+  logspout:
+    image: gliderlabs/logspout:v3
+    labels:
+      - "logspout.exclude=true"
+    environment:
+      - EXCLUDE_LABEL=logspout.exclude
+      - LOGSPOUT=ignore
+    command: 'udp://logstash:5000'
+    links:
+      - logstash
+    volumes:
+      - '/var/run/docker.sock:/tmp/docker.sock'
+    depends_on:
+      - logstash
+
+  logstash:
+    image: logstash:2.1.1
+    labels:
+      - "logspout.exclude=true"
+    environment:
+      - STDOUT=true
+      - LOGSPOUT=ignore
+    volumes:
+      - ./logstash.conf:/etc/logstash/conf.d/logstash.conf:ro
+      - ./logrotate:/etc/logrotate/agnos:ro
+      - "${LOG_FILES_DIRECTORY}:/usr/share/logstash/data"
+    command: 'logstash -f /etc/logstash/conf.d/logstash.conf'

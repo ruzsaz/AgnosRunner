@@ -18,11 +18,11 @@ PROGRAM_DIR="$(dirname ${SCRIPT_DIR})"
 # Load the personal settings
 source ${SCRIPT_DIR}/environment.txt
 
-mvn clean install --file ../AgnosCube/pom.xml && \
-mvn clean install --file ../AgnosReport/pom.xml && \
-mvn clean install --file ../AgnosCubeDriver/pom.xml && \
-mvn clean install --file ../AgnosCubeMeta/pom.xml && \
-mvn clean install --file ../AgnosCubeServer/pom.xml && \
-mvn clean install --file ../AgnosReportManager/pom.xml && \
-mvn clean install --file ../AgnosReportServer/pom.xml && \
-echo "Everything went well..."
+mkdir ${LOG_FILES_DIRECTORY}
+chmod 777 ${LOG_FILES_DIRECTORY}
+
+# Restore to normal env variable mode
+set +o allexport
+
+# Start the docker compose process
+docker-compose -f docker-compose.yaml up
