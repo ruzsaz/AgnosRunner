@@ -1,9 +1,0 @@
-/usr/share/logstash/data/agnos.log {
-	daily
-	rotate 14
-	missingok
-	notifempty
-	compress
-	nocreate
-}
-

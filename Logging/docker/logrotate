@@ -1,0 +1,10 @@
+/usr/share/logstash/data/agnos/agnos.log {
+	su logstash logstash
+	daily
+	rotate 14
+	missingok
+	notifempty
+	compress
+	nocreate
+}
+

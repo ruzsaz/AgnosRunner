@@ -17,14 +17,12 @@ services:
       - logstash
 
   logstash:
-    image: logstash:2.1.1
+    image: ruzsaz/agnos-logstash:1.0
     labels:
       - "logspout.exclude=true"
     environment:
       - STDOUT=true
       - LOGSPOUT=ignore
     volumes:
-      - ./logstash.conf:/etc/logstash/conf.d/logstash.conf:ro
-      - ./logrotate:/etc/logrotate/agnos:ro
-      - "${LOG_FILES_DIRECTORY}:/usr/share/logstash/data"
+      - "${LOG_FILES_DIRECTORY}:/usr/share/logstash/data/agnos"
     command: 'logstash -f /etc/logstash/conf.d/logstash.conf'
