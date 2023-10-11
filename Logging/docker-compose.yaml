@@ -25,4 +25,3 @@ services:
       - LOGSPOUT=ignore
     volumes:
       - "${LOG_FILES_DIRECTORY}:/usr/share/logstash/data/agnos"
-    command: 'logstash -f /etc/logstash/conf.d/logstash.conf'
