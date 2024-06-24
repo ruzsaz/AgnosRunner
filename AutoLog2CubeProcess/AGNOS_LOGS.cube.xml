@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Cube>
+  <SourceDBDriver>org.postgresql.Driver</SourceDBDriver>
+  <SourceDBURL>jdbc:postgresql://host.docker.internal:15432/postgres</SourceDBURL>
+  <SourceDBUser>postgres</SourceDBUser>
+  <SourceDBPassword>postgres123</SourceDBPassword>
+  <Measures>
+    <Measure uniqueName="number"/>
+  </Measures>
+  <Dimensions>
+    <Dimension uniqueName="TIME_HIER" order="0" isOfflineCalculated="true">
+      <Levels>
+        <Level uniqueName="YEAR" depth="1" codeColumnName="YEAR" nameColumnName="YEAR"/>
+        <Level uniqueName="MONTH" depth="2" codeColumnName="month" nameColumnName="month"/>
+        <Level uniqueName="DAY" depth="3" codeColumnName="day" nameColumnName="day"/>
+      </Levels>
+    </Dimension>
+    <Dimension uniqueName="REPORT_HIER" order="1" isOfflineCalculated="false">
+      <Levels>
+        <Level uniqueName="REPORT" depth="1" codeColumnName="report" nameColumnName="report"/>
+      </Levels>
+    </Dimension>
+    <Dimension uniqueName="ACTION_HIER" order="2" isOfflineCalculated="false">
+      <Levels>
+        <Level uniqueName="ACTION_TYPE" depth="1" codeColumnName="action_type" nameColumnName="action_type"/>
+      </Levels>
+    </Dimension>
+    <Dimension uniqueName="USER_HIER" order="3" isOfflineCalculated="false">
+      <Levels>
+        <Level uniqueName="USER" depth="1" codeColumnName="USER_NAME" nameColumnName="USER_NAME"/>
+      </Levels>
+    </Dimension>
+  </Dimensions>
+  <Aggregations />
+  <ExtraCalculations />
+</Cube>

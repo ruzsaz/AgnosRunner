@@ -21,11 +21,5 @@ source ${SCRIPT_DIR}/environment.txt
 # Restore to normal env variable mode
 set +o allexport
 
-# Stop the frontend container
-yes | docker compose rm -s -v agnos-httpd
-
-# Delete image
-docker rmi $(docker images -q 'ruzsaz/agnos-apache' | uniq)
-
 # Start the docker compose process
-docker compose up -d
+docker compose up

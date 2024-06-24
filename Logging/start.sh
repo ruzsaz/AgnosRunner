@@ -31,4 +31,4 @@ chmod g+s ${LOG_FILES_DIRECTORY}
 set +o allexport
 
 # Start the docker compose process
-docker-compose up -d
+docker compose up -d

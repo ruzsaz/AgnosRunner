@@ -16,4 +16,4 @@ source ${SCRIPT_DIR}/environment.txt
 
 set +o allexport
 
-docker-compose down
+docker compose down
