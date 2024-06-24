@@ -20,9 +20,9 @@ source ${SCRIPT_DIR}/environment.txt
 
 mvn clean install --file ../AgnosCube/pom.xml && \
 mvn clean install --file ../AgnosReport/pom.xml && \
-mvn clean install --file ../AgnosCubeDriver/pom.xml && \
 mvn clean install --file ../AgnosCubeMeta/pom.xml && \
+mvn clean install --file ../AgnosCubeDriver/pom.xml && \
 mvn clean install --file ../AgnosCubeServer/pom.xml && \
-mvn clean install --file ../AgnosReportManager/pom.xml && \
+# mvn clean install --file ../AgnosReportManager/pom.xml && \
 mvn clean install --file ../AgnosReportServer/pom.xml && \
 echo "Everything went well..."

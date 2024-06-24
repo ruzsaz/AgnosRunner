@@ -22,4 +22,4 @@ source ${SCRIPT_DIR}/environment.txt
 set +o allexport
 
 # Start the docker compose process
-docker-compose up
+docker-compose up -d

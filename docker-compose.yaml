@@ -2,7 +2,7 @@ version: '3'
 
 services:
   keycloak:
-    image: ruzsaz/agnos-keycloak:1.0
+    image: ruzsaz/agnos-keycloak:4.0
     container_name: agnos-keycloak
     environment:
       KEYCLOAK_ADMIN: "${KEYCLOAK_ADMIN}"
@@ -28,7 +28,7 @@ services:
       - "${KEYCLOAK_DATABASE_DIR}:/opt/keycloak/data/"
 
   nginx:
-    image: ruzsaz/agnos-cube-nginx:1.0
+    image: ruzsaz/agnos-cube-nginx:4.0
     container_name: agnos-cube-nginx
     networks:
       - backend
@@ -40,7 +40,7 @@ services:
         max-size: "10m"
 
   cube-server-1:
-    image: ruzsaz/agnos-cube-server:2.0
+    image: ruzsaz/agnos-cube-server:4.0
     container_name: agnos-cube-server-1
     volumes:
       - "${CUBES_DIR}:/usr/local/agnos/Cubes/"
@@ -55,7 +55,7 @@ services:
         max-size: "10m"
 
   cube-server-2:
-    image: ruzsaz/agnos-cube-server:2.0
+    image: ruzsaz/agnos-cube-server:4.0
     container_name: agnos-cube-server-2
     volumes:
       - "${CUBES_DIR}:/usr/local/agnos/Cubes/"
@@ -70,7 +70,7 @@ services:
         max-size: "10m"
 
   agnos-httpd:
-    image: ruzsaz/agnos-apache:2.4
+    image: ruzsaz/agnos-apache:4.0
     container_name: agnos-frontend
     environment:
       KEYCLOAK_PUBLIC_IP: "${KEYCLOAK_PUBLIC_IP}"
@@ -90,7 +90,7 @@ services:
         max-size: "10m"
 
   report-server:
-    image: ruzsaz/agnos-report-server:2.0
+    image: ruzsaz/agnos-report-server:4.0
     container_name: agnos-report-server
     environment:
       KEYCLOAK_REALM_PUBLIC_URI: "${KEYCLOAK_PUBLIC_IP}${KEYCLOAK_PATH_PREFIX}/realms/${KEYCLOAK_REALM}"
@@ -115,7 +115,7 @@ services:
         max-size: "10m"
 
   report-manager:
-    image: ruzsaz/agnos-report-manager:2.0
+    image: ruzsaz/agnos-report-manager:4.0
     container_name: agnos-report-manager
     environment:
       CUBE_SERVER_URI: "http://agnos-cube-nginx:7979/acs"

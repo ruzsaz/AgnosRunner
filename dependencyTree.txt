@@ -1,9 +1,9 @@
-Agnos: -
-AgnosCube: -
-AgnosReport: -
-AgnosCubeDriver: AgnosCube
-AgnosCubeMeta: AgnosCubeDriver
-AgnosCubeServer: AgnosCubeMeta
-AgnosReportManager: AgnosCubeMeta, AgnosReport
-AgnosReportServer: AgnosCubeMeta, AgnosReport
+Agnos 4.0: -
+AgnosCube 4.0: -
+AgnosCubeMeta 4.0: AgnosCube 4.0
+AgnosCubeDriver 4.0: AgnosCubeMeta 4.0
+AgnosCubeServer 4.0: AgnosCubeMeta 4.0, AgnosCubeDriver 4.0
+AgnosReport 4.0: -
+AgnosReportManager : AgnosCubeMeta, AgnosReport
+AgnosReportServer 4.0: AgnosCubeMeta 4.0, AgnosReport 4.0
 

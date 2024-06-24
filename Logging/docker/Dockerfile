@@ -6,7 +6,7 @@ USER logstash
 RUN mkdir /usr/share/logstash/data/agnos/
 USER root
 ENV DEBIAN_FRONTEND=noninteractive
-RUN apt install -y logrotate sudo
+RUN apt install -y logrotate
 RUN chmod 644 /etc/logrotate.d/agnos
 RUN chown root:root /etc/logrotate.d/agnos
 ENTRYPOINT cron start && logstash -f /etc/logstash/conf.d/logstash.conf
