@@ -20,6 +20,7 @@
     REPORTSERVER_PUBLIC_IP=https://emk.semmelweis.hu/a_report
     AGNOS_PUBLIC_IP=https://emk.semmelweis.hu/agnos
     REPORTMANAGER_PUBLIC_IP=https://emk.semmelweis.hu/AgnosReportManager
+    REPORTMANAGER_INSIDE_IP=http://10.98.200.95:9092/AgnosReportManager
 14) edit file: ~Agnos/AgnosRunner/Logging/environment.txt
     LOG_FILES_DIRECTORY=/home/agnos/log
 15) Copy cubes, reports to ~/Agnos/Data/Cubes
