@@ -9,8 +9,9 @@
 9) mkdir Data/Cubes
 10) mkdir Data/Keycloak
 11) mkdir ../log
-12) git clone https://github.com/ruzsaz/AgnosRunner.git
-13) edit file: ~/Agnos/AgnosRunner/environment.txt:
+12) chmod -R 777 Data; chmod -R 777 ../log
+13) git clone https://github.com/ruzsaz/AgnosRunner.git
+14) edit file: ~/Agnos/AgnosRunner/environment.txt:
     CUBES_DIR=/home/agnos/Agnos/Data/Cubes
     REPORTS_DIR=/home/agnos/Agnos/Data/Cubes
     KEYCLOAK_DATABASE_DIR=/home/agnos/Agnos/Data/Keycloak/
@@ -21,10 +22,10 @@
     AGNOS_PUBLIC_IP=https://emk.semmelweis.hu/agnos
     REPORTMANAGER_PUBLIC_IP=https://emk.semmelweis.hu/AgnosReportManager
     REPORTMANAGER_INSIDE_IP=http://10.98.200.95:9092/AgnosReportManager
-14) edit file: ~/Agnos/AgnosRunner/Logging/environment.txt
+15) edit file: ~/Agnos/AgnosRunner/Logging/environment.txt
     LOG_FILES_DIRECTORY=/home/agnos/log
-15) Copy cubes, reports to ~/Agnos/Data/Cubes
-16) Run:
+16) Copy cubes, reports to ~/Agnos/Data/Cubes
+17) Run:
     ~/Agnos/AgnosRunner/start.sh
     ~/Agnos/AgnosRunner/Logging/start.sh
-17) AutoLogProcess?
+18) AutoLogProcess?
