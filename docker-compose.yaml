@@ -42,6 +42,9 @@ services:
   cube-server-1:
     image: ruzsaz/agnos-cube-server:4.0
     container_name: agnos-cube-server-1
+    environment:
+      CUBES_MEMORY_LIMIT: "${CUBES_MEMORY_LIMIT}"
+      CUBESERVER_XMX: "${CUBESERVER_XMX}"
     volumes:
       - "${CUBES_DIR}:/usr/local/agnos/Cubes/"
     networks:
@@ -57,6 +60,9 @@ services:
   cube-server-2:
     image: ruzsaz/agnos-cube-server:4.0
     container_name: agnos-cube-server-2
+    environment:
+      CUBES_MEMORY_LIMIT: "${CUBES_MEMORY_LIMIT}"
+      XMX: "${CUBESERVER_XMX}"
     volumes:
       - "${CUBES_DIR}:/usr/local/agnos/Cubes/"
     networks:
@@ -83,6 +89,8 @@ services:
     depends_on:
       - keycloak
       - report-server
+    volumes:
+      - "${MAPS_DIR}:/usr/local/apache2/htdocs/data/maps"
     logging:
       driver: "json-file"
       options:
@@ -138,6 +146,7 @@ services:
     volumes:
       - "${REPORTS_DIR}:/opt/agnos/Reports"
       - "${CUBES_DIR}:/opt/agnos/Cubes"
+      - "${MAPS_DIR}:/opt/agnos/Maps"
     logging:
       driver: "json-file"
       options:

@@ -6,6 +6,9 @@ CUBES_DIR=/home/ruzsaz/Agnos/Cubes
 # Local directory containing the report metas. It will be volumed to the ReportServer container.
 REPORTS_DIR=/home/ruzsaz/Agnos/Reports
 
+# Local directory containing the maps for the frontend. It will be volumed to frontend, and the report editor.
+MAPS_DIR=/home/ruzsaz/Agnos/Maps
+
 # Keycloak's database's local location. It will be mapped inside to the Keycloak conatiner.
 KEYCLOAK_DATABASE_DIR=/home/ruzsaz/Agnos/Keycloak/
 
@@ -26,6 +29,7 @@ KEYCLOAK_PROXY_MODE=none
 # IP and port to put the AgnosReportServer service
 REPORTSERVER_PUBLIC_IP=http://192.168.1.2:9091	# Public URL AFTER firewalls or front facing proxies applied
 REPORTSERVER_INSIDE_PORT=9091			# Public port WITHOUT firewalls or front facing proxies
+CUBESERVER_MEMORY_ALLOWED=10			# In gigabytes
 
 
 ##### Agnos client settings
