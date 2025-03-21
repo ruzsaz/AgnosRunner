@@ -6,8 +6,9 @@ CUBES_DIR=/home/ruzsaz/Agnos/Cubes
 # Local directory containing the report metas. It will be volumed to the ReportServer container.
 REPORTS_DIR=/home/ruzsaz/Agnos/Reports
 
-# Local directory containing the maps for the frontend. It will be volumed to frontend, and the report editor.
+# Local directory containing the maps and dictionaries for the frontend. It will be volumed to frontend, and the report editor.
 MAPS_DIR=/home/ruzsaz/Agnos/Maps
+DICTS_DIR=/home/ruzsaz/Agnos/Dictionaries
 
 # Keycloak's database's local location. It will be mapped inside to the Keycloak conatiner.
 KEYCLOAK_DATABASE_DIR=/home/ruzsaz/Agnos/Keycloak/

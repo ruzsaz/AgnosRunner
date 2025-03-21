@@ -86,11 +86,9 @@ services:
     networks:
       - frontend
       - keycloak
-    depends_on:
-      - keycloak
-      - report-server
     volumes:
       - "${MAPS_DIR}:/usr/local/apache2/htdocs/data/maps"
+      - "${DICTS_DIR}:/usr/local/apache2/htdocs/data/dictionaries"
     logging:
       driver: "json-file"
       options:
@@ -128,6 +126,8 @@ services:
     environment:
       CUBE_SERVER_URI: "http://agnos-cube-nginx:7979/acs"
       REPORT_SERVER_URI: "http://agnos-report-server:9091/ars"
+      MAP_FILES_DIR: "/opt/agnos/Maps"
+      DICTIONARY_FILES_DIR: "/opt/agnos/Dictionaries"
       KEYCLOAK_SERVERURL: "${KEYCLOAK_PUBLIC_IP}${KEYCLOAK_PATH_PREFIX}"
       KEYCLOAK_REALM: "${KEYCLOAK_REALM}"
       KEYCLOAK_CLIENTID: "${KEYCLOAK_CLIENT}"
@@ -147,6 +147,7 @@ services:
       - "${REPORTS_DIR}:/opt/agnos/Reports"
       - "${CUBES_DIR}:/opt/agnos/Cubes"
       - "${MAPS_DIR}:/opt/agnos/Maps"
+      - "${DICTS_DIR}:/opt/agnos/Dictionaries"
     logging:
       driver: "json-file"
       options:
