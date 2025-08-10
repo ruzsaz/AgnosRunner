@@ -1,5 +1,3 @@
-version: '3'
-
 services:
   keycloak:
     image: ruzsaz/agnos-keycloak:4.0
@@ -62,7 +60,7 @@ services:
     container_name: agnos-cube-server-2
     environment:
       CUBES_MEMORY_LIMIT: "${CUBES_MEMORY_LIMIT}"
-      XMX: "${CUBESERVER_XMX}"
+      CUBESERVER_XMX: "${CUBESERVER_XMX}"
     volumes:
       - "${CUBES_DIR}:/usr/local/agnos/Cubes/"
     networks:

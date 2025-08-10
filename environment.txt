@@ -1,17 +1,17 @@
 ##### Local settings: files, volumes, ip
 
 # Local directory containing the cubes. It will be volumed to the CubeServer containers.
-CUBES_DIR=/home/ruzsaz/Agnos/Cubes
+CUBES_DIR=~/Agnos/Data/Cubes
 
 # Local directory containing the report metas. It will be volumed to the ReportServer container.
-REPORTS_DIR=/home/ruzsaz/Agnos/Reports
+REPORTS_DIR=~/Agnos/Data/Cubes
 
 # Local directory containing the maps and dictionaries for the frontend. It will be volumed to frontend, and the report editor.
-MAPS_DIR=/home/ruzsaz/Agnos/Maps
-DICTS_DIR=/home/ruzsaz/Agnos/Dictionaries
+MAPS_DIR=~/Agnos/Data/Maps
+DICTS_DIR=~/Agnos/Data/Dictionaries
 
 # Keycloak's database's local location. It will be mapped inside to the Keycloak conatiner.
-KEYCLOAK_DATABASE_DIR=/home/ruzsaz/Agnos/Keycloak/
+KEYCLOAK_DATABASE_DIR=~/Agnos/Data/Keycloak/
 
 
 ##### Keycloak settings
@@ -23,14 +23,19 @@ KEYCLOAK_ADMIN_PASSWORD=admin2357
 KEYCLOAK_PATH_PREFIX=/auth
 KEYCLOAK_REALM=AgnosRealm
 KEYCLOAK_CLIENT=agnos
-KEYCLOAK_PROXY_MODE=none
+KEYCLOAK_PROXY_MODE=edge
 
 
 ##### ReportServer settings
 # IP and port to put the AgnosReportServer service
 REPORTSERVER_PUBLIC_IP=http://192.168.1.2:9091	# Public URL AFTER firewalls or front facing proxies applied
 REPORTSERVER_INSIDE_PORT=9091			# Public port WITHOUT firewalls or front facing proxies
-CUBESERVER_MEMORY_ALLOWED=10			# In gigabytes
+
+
+##### CubeserverServer settings
+# Memory management options
+CUBES_MEMORY_LIMIT=10                            # In gigabytes
+CUBESERVER_XMX=14G
 
 
 ##### Agnos client settings
@@ -41,5 +46,5 @@ AGNOS_INSIDE_PORT=8080				# Public port WITHOUT firewalls or front facing proxie
 
 ##### Report Manager settings
 REPORTMANAGER_PUBLIC_IP=http://192.168.1.2:9092		# Public URL AFTER firewalls or front facing proxies applied
-REPORTMANAGER_INSIDE_IP=http://192.168.1.2:9092/AgnosReportManager	# For redirect URI only for the keaycloak
+REPORTMANAGER_INSIDE_IP=http://192.168.1.2:9092/AgnosReportManager	# For redirect URI only for the keycloak
 REPORTMANAGER_INSIDE_PORT=9092				# Public port WITHOUT firewalls or front facing proxies

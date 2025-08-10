@@ -1,1 +1,1 @@
-LOG_FILES_DIRECTORY=/home/ruzsaz/IdeaProjects/Agnos/log
+LOG_FILES_DIRECTORY=~/log

@@ -1,8 +1,6 @@
-version: '3.3'
-
 services:
   logspout:
-    image: gliderlabs/logspout:v3
+    image: gliderlabs/logspout:v3.2.14
     labels:
       - "logspout.exclude=true"
     environment:
